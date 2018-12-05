@@ -1,10 +1,11 @@
 <template>
-  <div id="app">
+  <v-app>
     
+    <navbar/>
     <!-- <div class="container mt-4"> -->
       <child/>
     <!-- </div> -->
-  </div>
+  </v-app>
 </template>
 
 <script>
