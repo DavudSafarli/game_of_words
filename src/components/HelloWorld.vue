@@ -29,10 +29,15 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  async mounted() {
+    const a = await axios.get('https://jsonplaceholder.typicode.com/todos?UserId=1')
+    console.log(a)
   }
 }
 </script>
