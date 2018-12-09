@@ -12,7 +12,14 @@ import Vuetify, {
     VList,
     VListTile,
     VListTileContent,
-    VIcon
+    VIcon,
+    VCard,
+    VCardTitle,
+    VDialog,
+    VCardText,
+    VDivider,
+    VCardActions,
+    VChip   
 
 } from 'vuetify/lib'
 
@@ -34,7 +41,14 @@ Vue.use(Vuetify, {
         VList,
         VListTile,
         VListTileContent,
-        VIcon
+        VIcon,
+        VCard,
+        VCardTitle,
+        VDialog,
+        VCardText,
+        VDivider,
+        VCardActions,
+        VChip   
     }
 })
 

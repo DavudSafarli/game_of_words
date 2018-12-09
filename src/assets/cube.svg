@@ -1,0 +1,76 @@
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 308.4 308.44">
+                            <defs>
+                                <linearGradient id="linear-gradient" x1="10" y1="142.86" x2="-275.71" y2="142.86" gradientTransform="matrix(-1, 0, 0, 1, 10, 0)" gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#fff" />
+                                    <stop offset="1" stop-color="#d1d3d4" />
+                                </linearGradient>
+                                <linearGradient id="linear-gradient-2" x1="7.71" y1="142.86" x2="-273.43" y2="142.86" gradientTransform="matrix(-1, 0, 0, 1, 10, 0)"
+                                    gradientUnits="userSpaceOnUse">
+                                    <stop offset="0" stop-color="#d1d3d4" />
+                                    <stop offset="1" stop-color="#fff" />
+                                </linearGradient>
+                            </defs>
+                            <title>Asset 2</title>
+                            <g style="isolation: isolate;" class="cls-1">
+                                <g id="Layer_2" data-name="Layer 2">
+                                    <g id="rectangle">
+                                        <g style="mix-blend-mode: multiply;" class="cls-2">
+                                            <rect style="fill: #fff;opacity: 0;" class="Graphic-Style-6" x="23.03" y="23.04" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #fdfdfd;opacity: 0.02;" class="cls-3" x="22.58" y="22.59" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #fafafa;opacity: 0.04;" class="cls-4" x="22.13" y="22.15" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #f8f8f8;opacity: 0.06;" class="cls-5" x="21.68" y="21.7" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #f5f5f5;opacity: 0.08;" class="cls-6" x="21.24" y="21.25" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #f3f3f3;opacity: 0.1;" class="cls-7" x="20.79" y="20.8" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #f0f0f1;opacity: 0.12;" class="cls-8" x="20.34" y="20.35" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #eee;opacity: 0.14;" class="cls-9" x="19.89" y="19.91" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #ebebec;opacity: 0.16;" class="cls-10" x="19.44" y="19.46" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #e9e9e9;opacity: 0.18;" class="cls-11" x="18.99" y="19.01" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #e6e6e7;opacity: 0.2;" class="cls-12" x="18.55" y="18.56" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #e4e4e5;opacity: 0.22;" class="cls-13" x="18.1" y="18.11" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #e1e2e2;opacity: 0.24;" class="cls-14" x="17.65" y="17.66" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #dfdfe0;opacity: 0.25;" class="cls-15" x="17.2" y="17.22" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #dcddde;opacity: 0.27;" class="cls-16" x="16.75" y="16.77" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #dadadb;opacity: 0.29;" class="cls-17" x="16.31" y="16.32" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #d7d8d9;opacity: 0.31;" class="cls-18" x="15.86" y="15.87" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #d5d5d6;opacity: 0.33;" class="cls-19" x="15.41" y="15.42" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #d2d3d4;opacity: 0.35;" class="cls-20" x="14.96" y="14.98" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #d0d0d2;opacity: 0.37;" class="cls-21" x="14.51" y="14.53" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #cdcecf;opacity: 0.39;" class="cls-22" x="14.06" y="14.08" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #cbcccd;opacity: 0.41;" class="cls-23" x="13.62" y="13.63" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #c8c9ca;opacity: 0.43;" class="cls-24" x="13.17" y="13.18" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #c6c7c8;opacity: 0.45;" class="cls-25" x="12.72" y="12.73" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #c3c4c6;opacity: 0.47;" class="cls-26" x="12.27" y="12.29" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #c1c2c3;opacity: 0.49;" class="cls-27" x="11.82" y="11.84" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #bebfc1;opacity: 0.51;" class="cls-28" x="11.38" y="11.39" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #bcbdbe;opacity: 0.53;" class="cls-29" x="10.93" y="10.94" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #b9babc;opacity: 0.55;" class="cls-30" x="10.48" y="10.49" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #b7b8ba;opacity: 0.57;" class="cls-31" x="10.03" y="10.05" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #b4b5b7;opacity: 0.59;" class="cls-32" x="9.58" y="9.6" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #b2b3b5;opacity: 0.61;" class="cls-33" x="9.13" y="9.15" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #afb1b2;opacity: 0.63;" class="cls-34" x="8.69" y="8.7" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #adaeb0;opacity: 0.65;" class="cls-35" x="8.24" y="8.25" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #aaacae;opacity: 0.67;" class="cls-36" x="7.79" y="7.8" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #a8a9ab;opacity: 0.69;" class="cls-37" x="7.34" y="7.36" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #a5a7a9;opacity: 0.71;" class="cls-38" x="6.89" y="6.91" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #a3a4a6;opacity: 0.73;" class="cls-39" x="6.45" y="6.46" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #a0a2a4;opacity: 0.75;" class="cls-40" x="6" y="6.01" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #9e9fa2;opacity: 0.76;" class="cls-41" x="5.55" y="5.56" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #9b9d9f;opacity: 0.78;" class="cls-42" x="5.1" y="5.12" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #999b9d;opacity: 0.8;" class="cls-43" x="4.65" y="4.67" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #96989b;opacity: 0.82;" class="cls-44" x="4.21" y="4.22" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #949698;opacity: 0.84;" class="cls-45" x="3.76" y="3.77" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #919396;opacity: 0.86;" class="cls-46" x="3.31" y="3.32" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #8f9193;opacity: 0.88;" class="cls-47" x="2.86" y="2.87" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #8c8e91;opacity: 0.9;" class="cls-48" x="2.41" y="2.43" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #8a8c8f;opacity: 0.92;" class="cls-49" x="1.96" y="1.98" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #87898c;opacity: 0.94;" class="cls-50" x="1.52" y="1.53" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #85878a;opacity: 0.96;" class="cls-51" x="1.07" y="1.08" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #828487;opacity: 0.98;" class="cls-52" x="0.62" y="0.63" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                            <rect style="fill: #808285;" class="cls-53" x="0.17" y="0.19" width="285.37" height="285.4" rx="53.65" ry="53.65" />
+                                        </g>
+                                        <rect style="fill: url(#linear-gradient);" class="cls-54" width="285.71" height="285.71" rx="53.71" ry="53.71" />
+                                        <rect style="fill: url(#linear-gradient-2);" class="cls-55" x="2.29" y="2.29" width="281.14" height="281.14" rx="51.43" ry="51.43" />
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>

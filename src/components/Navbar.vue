@@ -12,8 +12,11 @@
         <v-spacer></v-spacer>
 
         <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn flat :to="{name:'home'}"><span>Words Checker</span></v-btn>
-            <v-btn flat to="/game2"><span>Game 2</span></v-btn>
+            <v-btn class="new_button" flat :to="{name:'game1'}">
+                <v-chip class="new_chip" small color="red" text-color="white">new</v-chip>
+                <span>Words Checker</span>
+            </v-btn>
+            <!-- <v-btn flat to="/game2"><span>Game 2</span></v-btn> -->
         </v-toolbar-items>
 
         <v-toolbar-items>
@@ -23,7 +26,7 @@
                 </v-btn>
 
                 <v-list>
-                    <v-list-tile active-class="false" :to="{name:'home'}">
+                    <v-list-tile active-class="false" :to="{name:'game1'}">
                         <v-list-tile-content>
                             Words Checker
                         </v-list-tile-content>
@@ -48,5 +51,18 @@ export default {
 </script>
 
 <style>
+.new_button{
+    position: relative;
+}
+.new_button .v-chip{
+    top: -20px;
+    left: 90px;
+    position: absolute;
+    font-size: 10px;
+    height: 20px;
+}
+.new_button .v-chip span{
+    padding: 0 5px;
+}
 
 </style>

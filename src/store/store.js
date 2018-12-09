@@ -4,9 +4,13 @@ import Vue from 'vue';
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
-    
-    state : {
-        game_words: 'asd',
+
+    state: {
+        button_state: true,
+        game_finished: null,
+        game_status: null, // won or lost
+        found_pairs : [],
+        game_words: '0',
         words_hard: ['consider',
             'minute',
             'accord',
@@ -1007,72 +1011,150 @@ export const store = new Vuex.Store({
             'reprise',
             'anodyne',
             'bemused',
-        ]
+        ],
+        game_ready_state: false
     },
 
     // getters
-    getters : {
+    getters: {
+        timeout: state => state.timeout,
         game_words: state => state.game_words,
+        game_status: state => state.game_status,
+        button_state: state => state.button_state,
+        game_finished: state => state.game_finished,
+        game_ready_state: state => state.game_ready_state,
     },
 
     // mutations
-    mutations : {
+    mutations: {
+        add_found_pair(state, pair_id){
+            state.found_pairs.push(pair_id)
+        },
         save_game_words(state, res) {
             state.game_words = res
         },
     },
 
     // actions
-    actions : {
-        hacume({
-            commit,
-            state
-        }, data) {
+    actions: {
+        check_finish({commit, state}){
+            if(state.found_pairs.length == 2){
+                state.game_finished = true
+                state.game_status = true // won
+                return true;
+            }
+            return false
+        },
+        add_found_pair({commit, dispatch}, pair_id){
+            commit('add_found_pair', pair_id)
+            return new Promise(res => {
+                res(dispatch('check_finish'))
+            })
+        },
+        finish({commit,state,dispatch}, data){
+            state.game_finished = true
+            if(state.found_pairs.length == 2){
+                state.game_status = true // won
+            }else{
+                state.game_status = false; //lost
+            }
+        },
+        hacume({commit,state,dispatch}, data) {
+            let x = setInterval(() => {
+                if(state.game_words.length != 12){
+                    state.game_words += '0';
+                }
+            }, 50);
+            state.game_ready_state = true;
+            state.game_finished = null;
+            state.game_status = null;
+            state.game_words = '';
+            state.found_pairs = [];
             let promises = [];
             let response = [];
             let c = 1;
-            for (let i = 0; i < 1; i++) {
+            for (let i = 0; i < 2; i++) {
                 const rd = Math.floor(Math.random() * 1000);
                 let key = state.words_hard[rd]
                 // let key = 'justify'
-                response.push({id: c, p_id: i+1, key})
+                response.push({
+                    id: c,
+                    p_id: i + 1,
+                    key
+                })
                 c++;
                 promises.push(hit_api(key, i))
             }
-            Promise.all(promises).then( res => {
-                for (let i = 0; i < 1; i++) {
+            Promise.all(promises).then(res => {
+                for (let i = 0; i < 2; i++) {
                     res[i].id = c
                     c++;
                     response.push(res[i])
                 }
-                console.log(response)
                 commit('save_game_words', shuffle(response))
+                state.game_ready_state = true
+                clearInterval(x);  
+                window.dispatchEvent(new Event('start'));
             })
 
 
-            function url(key) { 
+            function url(key) {
                 return `https://api.wordnik.com/v4/word.json/${key}/definitions?limit=200&includeRelated=false&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=bdc7a844dda214d7b942a0622ef0d47ee6c4a6acb836dc532`
             }
             async function hit_api(key, i) {
+                console.log('hit')
                 return new Promise(async (resolve, rej) => {
                     let res = await axios.get(url(key))
-                    console.log('key ' + key)
                     res = res.data;
                     let l = res.length
-
                     let index = 0;
                     for (let i = 1; i < l; i++) {
-                        console.log(res[i].text)
-                        index = (res[i].text && res[i].text.length < res[index].text.length) ? i : index
+                        index = (res[i].text && res[i].text.length < res[0].text.length) ? i : index
                     }
-                    console.log(key + ' : ' + l + ' -- ' + res[index].sourceDictionary)
-                    resolve({p_id: i+1, key: res[index].text.replace('.', '')})
+                    let def = res[index].text.replace('.', '').replace(/\s*\(.*?\)\s*/g, '')
+                    if (def.length > 10)
+                        def = def.split(';')[0]
+                    let $l = def.length
+                    let arr = def.split(" ")
+                    let style = '';
+                    if ($l < arr.length * 6 && arr.length < 3) {
+                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 6;
+                        if (perc < 65)
+                            perc = 65;
+                        style = 'style="font-size:' + perc + '%;"'
+                        // console.log('birinci if : ' + def)
+                    } else if (arr.length > 10) {
+                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 7;
+                        if (perc < 65)
+                            perc = 65;
+                        style = 'style="font-size:' + perc + '%;padding:0 8px;"'
+                        // console.log('ucuncu if : ' + def)
+                    } else if (arr.length > 2) {
+                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 6;
+                        if (perc < 65)
+                            perc = 65;
+                        style = 'style="font-size:' + perc + '%;"'
+                        // console.log('ucuncu if : ' + def)
+                    }
+                    resolve({
+                        p_id: i + 1,
+                        key: '<p ' + style + '>' + def + '</p>'
+                    })
+
                     // setTimeout(() => {
+                    //     let l = key.length
+                    //     let arr = key.split(" ")
+                    //     console.log(arr)
+                    //     let style = '';
+                    //     if(arr.length >= 2)
+                    //         style = 'style="font-size=80%;"'
+
                     //     resolve({p_id: i+1,
-                    //         key: key + ' api'})
+                    //         key: '<p ' + style + '>' + key  + 'api </p>'})
                     // }, 1000);
                 })
             }
+
             function shuffle(a) {
                 var j, x, i;
                 for (i = a.length - 1; i > 0; i--) {
@@ -1083,7 +1165,9 @@ export const store = new Vuex.Store({
                 }
                 return a;
             }
+            
         }
+
 
     },
 })

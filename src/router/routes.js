@@ -1,5 +1,7 @@
-import Home from '../views/Home.vue'
-import About from '../views/About.vue'
+import Home from '../pages/Home.vue'
+import Games from '../pages/Games.vue'
+import WordsChecker  from '../pages/WordsChecker.vue'
+import WordsCheckerGame  from '../games/WordsChecker.vue'
 
 
 export default [
@@ -9,11 +11,18 @@ export default [
         component: Home
     },
     {
-        path: '/about',
-        name: 'about',
-        // route level code-splitting
-        // this generates a separate chunk (about.[hash].js) for this route
-        // which is lazy-loaded when the route is visited.
-        component: About
+        path: 'games',
+        name: 'games',
+        component: Games
+    },
+    {
+        path: '/words-checker',
+        name: 'game1',
+        component: WordsChecker,
+    },
+    {
+        path: '/words-checker/play',
+        name: 'playgame1',
+        component: WordsCheckerGame
     }
 ]

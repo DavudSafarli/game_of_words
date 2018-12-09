@@ -1,7 +1,1 @@
-<p>src/</p>
-    <p>components/</p>
-    <p>layouts/</p>
-    <p>middleware/</p>
-    <p>router/</p>
-    <p>views/</p>
-    <p>main.js</p>
+demo: <a href="davudsafarli.github.io/game_of_words">Game of Words</a>
