@@ -1038,7 +1038,7 @@ export const store = new Vuex.Store({
     // actions
     actions: {
         check_finish({commit, state}){
-            if(state.found_pairs.length == 2){
+            if(state.found_pairs.length == 6){
                 state.game_finished = true
                 state.game_status = true // won
                 return true;
@@ -1053,7 +1053,7 @@ export const store = new Vuex.Store({
         },
         finish({commit,state,dispatch}, data){
             state.game_finished = true
-            if(state.found_pairs.length == 2){
+            if(state.found_pairs.length == 6){
                 state.game_status = true // won
             }else{
                 state.game_status = false; //lost
@@ -1073,7 +1073,7 @@ export const store = new Vuex.Store({
             let promises = [];
             let response = [];
             let c = 1;
-            for (let i = 0; i < 2; i++) {
+            for (let i = 0; i < 6; i++) {
                 const rd = Math.floor(Math.random() * 1000);
                 let key = state.words_hard[rd]
                 // let key = 'justify'
@@ -1086,7 +1086,7 @@ export const store = new Vuex.Store({
                 promises.push(hit_api(key, i))
             }
             Promise.all(promises).then(res => {
-                for (let i = 0; i < 2; i++) {
+                for (let i = 0; i < 6; i++) {
                     res[i].id = c
                     c++;
                     response.push(res[i])
