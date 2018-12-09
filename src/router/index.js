@@ -89,8 +89,6 @@ async function beforeEach(to, from, next) {
         router.getMatchedComponents({ ...to
         })
     )
-    console.log('matched')
-    console.log(components)
     if (components.length === 0) {
         return next()
     }
@@ -120,7 +118,6 @@ async function beforeEach(to, from, next) {
         // Set the application layout only if "next()" was called with no args.
         if (args.length === 0) {
             // set layout global variabledi. App.vue'de yaradilib
-            console.log(router.app)
             router.app.setLayout(components[0].layout || '')
         }
         next(...args)
@@ -130,7 +127,6 @@ async function beforeEach(to, from, next) {
 
 function callMiddleware(middleware, to, from, next) {
     const stack = middleware.reverse()
-    console.log(stack)
 
     let c = 0;
     const _next = (...args) => {

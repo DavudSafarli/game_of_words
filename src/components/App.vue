@@ -31,7 +31,6 @@ export default {
      * @param {String} layout
      */
     setLayout (layout) {
-      console.log(layouts)
       if (!layout || !layouts[layout]) {
         layout = this.defaultLayout
       }

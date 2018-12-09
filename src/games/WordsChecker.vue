@@ -187,7 +187,6 @@ export default {
         },
         async clickHandler(e) {
             // if (e.target.tagName !== 'DIV' && e.target.tagName !== 'P'){
-            //     console.log('asda')
             //     return
             // }
             let cube = e.currentTarget //to delete elements
@@ -221,7 +220,6 @@ export default {
                     s[0].cube.parentElement.style.visibility = 'hidden'
                     s[1].cube.parentElement.style.visibility = 'hidden'
                     let gamefinished = await this.$store.dispatch('add_found_pair', s[0].pair_id)
-                    console.log(gamefinished)
                     if (gamefinished == true) {
                         clearInterval(x)
                     }
@@ -232,12 +230,10 @@ export default {
                 this.selected = [];
             }
 
-            // console.log(e.currentTarget)
         },
     },
     watch: {
         selected() {
-            // console.log(this.selected)
         }
     }
 }

@@ -5,13 +5,3 @@
   </v-container>
 </template>
 <script>
-export default {
-mounted() {
-  console.log(process.env)
-}
-}
-</script>
-
-<style>
-
-</style>

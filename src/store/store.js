@@ -1102,7 +1102,6 @@ export const store = new Vuex.Store({
                 return `https://api.wordnik.com/v4/word.json/${key}/definitions?limit=200&includeRelated=false&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=bdc7a844dda214d7b942a0622ef0d47ee6c4a6acb836dc532`
             }
             async function hit_api(key, i) {
-                console.log('hit')
                 return new Promise(async (resolve, rej) => {
                     let res = await axios.get(url(key))
                     res = res.data;
@@ -1122,19 +1121,16 @@ export const store = new Vuex.Store({
                         if (perc < 65)
                             perc = 65;
                         style = 'style="font-size:' + perc + '%;"'
-                        // console.log('birinci if : ' + def)
                     } else if (arr.length > 10) {
                         let perc = 100 - Math.ceil((arr.length / 2) - 1) * 7;
                         if (perc < 65)
                             perc = 65;
                         style = 'style="font-size:' + perc + '%;padding:0 8px;"'
-                        // console.log('ucuncu if : ' + def)
                     } else if (arr.length > 2) {
                         let perc = 100 - Math.ceil((arr.length / 2) - 1) * 6;
                         if (perc < 65)
                             perc = 65;
                         style = 'style="font-size:' + perc + '%;"'
-                        // console.log('ucuncu if : ' + def)
                     }
                     resolve({
                         p_id: i + 1,
@@ -1144,7 +1140,6 @@ export const store = new Vuex.Store({
                     // setTimeout(() => {
                     //     let l = key.length
                     //     let arr = key.split(" ")
-                    //     console.log(arr)
                     //     let style = '';
                     //     if(arr.length >= 2)
                     //         style = 'style="font-size=80%;"'

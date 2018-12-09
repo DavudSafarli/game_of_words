@@ -19,12 +19,10 @@ export default {
         }
     },
     mounted() {
-        console.log('this')
         let vueThis = this;
         this.$store.dispatch('hacume')
         window.addEventListener('resize', handler)
         function handler() {
-            console.log('asd')
             let s = window.innerWidth;
             if (window.innerHeight >= window.innerWidth) {
                 s = window.innerHeight
