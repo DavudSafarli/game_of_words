@@ -95,21 +95,25 @@
                 </div>
             </div>
         </div>
-        <div class="columns fixed">
-            <div class="column">
-                <v-btn><v-icon>arrow_back</v-icon></v-btn>
-            </div>
-            <v-spacer></v-spacer>
-            <div class="column">
-                <v-btn><v-icon>pause</v-icon></v-btn>
-            </div>
-        </div>
 
+    </div>
+    <div class="columns is-mobile fixed">
+        <div class="column">
+            <v-btn :to="{name: 'home'}">
+                <v-icon>arrow_back</v-icon>
+            </v-btn>
+        </div>
+        <v-spacer></v-spacer>
+        <div class="column">
+            <v-btn>
+                <v-icon>pause</v-icon>
+            </v-btn>
+        </div>
     </div>
     <div v-if="button_state" id="start_button" @click="start_game">
         <v-btn>Start</v-btn>
     </div>
-    
+
     <v-dialog :value="game_finished" width="500">
         <v-card>
             <v-card-text :style="{'text-align':'center', color: (game_status)?'#4BB543':'#ED5249'}">
@@ -119,14 +123,14 @@
             <v-divider></v-divider>
 
             <v-card-actions>
-                <v-btn color="primary" :to="{name: 'games'}" flat @click="dialog = false">
+                <v-btn color="primary" :to="{name: 'home'}" flat>
                     back
                 </v-btn>
                 <v-spacer></v-spacer>
                 <v-btn color="primary" flat @click="again">
                     try again
                 </v-btn>
-                
+
             </v-card-actions>
         </v-card>
     </v-dialog>
@@ -158,14 +162,14 @@ export default {
         ])
     },
     methods: {
-        again(){
+        again() {
             this.$store.dispatch('hacume')
         },
         start_game() {
             this.button_state = false;
             let vue = this
             window.addEventListener('start', () => {
-                vue.$nextTick(()=>{
+                vue.$nextTick(() => {
                     this.countdown()
                 })
             });
@@ -233,18 +237,21 @@ export default {
         },
     },
     watch: {
-        selected() {
-        }
+        selected() {}
     }
 }
 </script>
 
 <style>
-.fixed{
+#countdown{
+    align-self: flex-start;
+}
+.fixed {
     position: absolute;
     bottom: 0;
     width: 100%;
 }
+
 #game {
     padding: 30px 0;
 }
@@ -260,7 +267,7 @@ export default {
     opacity: 0.3;
     width: 100%;
     height: 100%;
-    font-size: calc(20vw + 40vh);
+    font-size: calc(50vh);
     position: absolute;
     top: 0;
     left: 0;
@@ -295,7 +302,7 @@ export default {
 .wrapper {
     height: 100%;
     padding: 0px 10px !important;
-    /* height: 100%; */
+    height: 100%;
     align-self: flex-start;
     position: relative;
 }
