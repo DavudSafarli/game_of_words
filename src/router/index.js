@@ -63,6 +63,7 @@ export default router
 function createRouter() {
     const router = new Router({
         //scrollBehavior,
+        base: process.env.BASE_URL,
         mode: 'history',
         routes
     })
