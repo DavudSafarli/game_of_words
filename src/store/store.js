@@ -1136,17 +1136,6 @@ export const store = new Vuex.Store({
                         p_id: i + 1,
                         key: '<p ' + style + '>' + def + '</p>'
                     })
-
-                    // setTimeout(() => {
-                    //     let l = key.length
-                    //     let arr = key.split(" ")
-                    //     let style = '';
-                    //     if(arr.length >= 2)
-                    //         style = 'style="font-size=80%;"'
-
-                    //     resolve({p_id: i+1,
-                    //         key: '<p ' + style + '>' + key  + 'api </p>'})
-                    // }, 1000);
                 })
             }
 
