@@ -190,9 +190,6 @@ export default {
             }, 1000);
         },
         async clickHandler(e) {
-            // if (e.target.tagName !== 'DIV' && e.target.tagName !== 'P'){
-            //     return
-            // }
             let cube = e.currentTarget //to delete elements
             let data_id = cube.getAttribute('data-id') - 1 //index of word array
             let pair_id = this.game_words[data_id].p_id //to check if word==definition
