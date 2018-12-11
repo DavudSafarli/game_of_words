@@ -5,7 +5,11 @@ import config from '../config/game.config.json'
 Vue.use(Vuex);
 var x;
 export const store = new Vuex.Store({
-
+    
+/*
+states:
+game_ready_state: game started. you can play now, tick tock motherfucker
+*/
     state: {
         button_state: true,
         game_finished: null,
@@ -1075,11 +1079,12 @@ export const store = new Vuex.Store({
             }, 1000);
         },
         hacume({commit,state,dispatch}, data) {
-            let x = setInterval(() => {
-                if(state.game_words.length != config.default.numberOfCards){
-                    state.game_words += '0';
-                }
-            }, 50);
+            // let x = setInterval(() => {
+            //     if(state.game_words.length != config.default.numberOfCards){
+            //         state.game_words += '0';
+            //     }
+            // }, 50);
+
             state.game_ready_state = true;
             state.game_finished = null;
             state.game_status = null;
