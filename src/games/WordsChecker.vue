@@ -139,6 +139,7 @@
 
 <script>
 var x;
+import config from '../config/game.config.json'
 import {mapGetters} from 'vuex'
 export default {
     layout: 'game',
@@ -177,7 +178,7 @@ export default {
             window.addEventListener('end', () => this.$store.dispatch('finish'));
         },
         countdown() {
-            let countDownTime = 30;
+            let countDownTime = config.timeout;
             let el = document.getElementById("countdown")
             el.innerHTML = countDownTime;
             x = setInterval(function () {

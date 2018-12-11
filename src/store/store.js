@@ -1,6 +1,7 @@
 import axios from "axios";
 import Vuex from 'vuex';
 import Vue from 'vue';
+import config from '../config/game.config.json'
 Vue.use(Vuex);
 
 export const store = new Vuex.Store({
@@ -1061,7 +1062,7 @@ export const store = new Vuex.Store({
         },
         hacume({commit,state,dispatch}, data) {
             let x = setInterval(() => {
-                if(state.game_words.length != 12){
+                if(state.game_words.length != config.default.numberOfCards){
                     state.game_words += '0';
                 }
             }, 50);
@@ -1073,7 +1074,7 @@ export const store = new Vuex.Store({
             let promises = [];
             let response = [];
             let c = 1;
-            for (let i = 0; i < 6; i++) {
+            for (let i = 0; i < config.default.numberOfPairs; i++) {
                 const rd = Math.floor(Math.random() * 1000);
                 let key = state.words_hard[rd]
                 // let key = 'justify'
@@ -1086,7 +1087,7 @@ export const store = new Vuex.Store({
                 promises.push(hit_api(key, i))
             }
             Promise.all(promises).then(res => {
-                for (let i = 0; i < 6; i++) {
+                for (let i = 0; i < config.default.numberOfPairs; i++) {
                     res[i].id = c
                     c++;
                     response.push(res[i])

@@ -1,0 +1,9 @@
+{
+    "default": {
+        "numberOfCards": "12",
+        "numberOfPairs": "6",
+        "timeout": "15"
+    }
+    
+
+}
