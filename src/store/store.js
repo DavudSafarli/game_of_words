@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 import Vue from 'vue';
 import config from '../config/game.config.json'
 Vue.use(Vuex);
-
+var x;
 export const store = new Vuex.Store({
 
     state: {
@@ -1020,6 +1020,7 @@ export const store = new Vuex.Store({
     getters: {
         timeout: state => state.timeout,
         game_words: state => state.game_words,
+        get_button_state: state => state.game_words,
         game_status: state => state.game_status,
         button_state: state => state.button_state,
         game_finished: state => state.game_finished,
@@ -1028,6 +1029,9 @@ export const store = new Vuex.Store({
 
     // mutations
     mutations: {
+        buttonState(state, bool){
+            state.button_state = bool
+        },
         add_found_pair(state, pair_id){
             state.found_pairs.push(pair_id)
         },
@@ -1039,18 +1043,15 @@ export const store = new Vuex.Store({
     // actions
     actions: {
         check_finish({commit, state}){
-            if(state.found_pairs.length == 6){
+            if(state.found_pairs.length == config.default.numberOfPairs){
                 state.game_finished = true
                 state.game_status = true // won
-                return true;
+                clearInterval(x);
             }
-            return false
         },
         add_found_pair({commit, dispatch}, pair_id){
             commit('add_found_pair', pair_id)
-            return new Promise(res => {
-                res(dispatch('check_finish'))
-            })
+            dispatch('check_finish')
         },
         finish({commit,state,dispatch}, data){
             state.game_finished = true
@@ -1059,6 +1060,19 @@ export const store = new Vuex.Store({
             }else{
                 state.game_status = false; //lost
             }
+        },
+        countdown() {
+            let countDownTime = config.default.timeout;
+            let el = document.getElementById("countdown")
+            el.innerHTML = countDownTime;
+            x = setInterval(function () {
+                --countDownTime;
+                el.innerHTML = countDownTime
+                if (countDownTime == 0) {
+                    clearInterval(x)
+                    window.dispatchEvent(new Event('end'));
+                }
+            }, 1000);
         },
         hacume({commit,state,dispatch}, data) {
             let x = setInterval(() => {
@@ -1096,6 +1110,7 @@ export const store = new Vuex.Store({
                 state.game_ready_state = true
                 clearInterval(x);  
                 window.dispatchEvent(new Event('start'));
+                dispatch('countdown')
             })
 
 

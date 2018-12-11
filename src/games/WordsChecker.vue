@@ -1,18 +1,11 @@
 <template>
 <div :class="{'columns is-mobile w100':true, }">
     <div :class="{'column is-two-fifths-fullhd is-two-fifths-widescreen is-three-fifths-desktop is-half-tablet is-four-fifths-mobile wrapper':true, 'overlay': !game_ready_state}">
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="blur-svg">
-            <defs>
-                <filter id="blur-filter">
-                    <feGaussianBlur stdDeviation="3"></feGaussianBlur>
-                </filter>
-            </defs>
-            </svg>
-        <div id="timeout" v-if="game_ready_state">
-            <span id="countdown"></span>
-        </div>
-        <div class="columns is-mobile" ref="loop" id="game">
-            <div class="column is-one-third" v-for="(item, index) in game_words" :key="index">
+        <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="blur-svg"><defs><filter id="blur-filter"><feGaussianBlur stdDeviation="3"></feGaussianBlur></filter></defs></svg>
+        <timeout></timeout>
+                <word-card></word-card>
+        <!-- <div class="columns is-mobile" id="game"> -->
+            <!-- <div class="column is-one-third" v-for="(item, index) in game_words" :key="index">
                 <div class="rel">
                     <svg viewBox="0 0 308.4 308.4">
                         <defs>
@@ -93,47 +86,13 @@
                         <p v-html="item.key"></p>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div> -->
+        <!-- </div> -->
 
     </div>
-    <div class="columns is-mobile fixed">
-        <div class="column">
-            <v-btn :to="{name: 'home'}">
-                <v-icon>arrow_back</v-icon>
-            </v-btn>
-        </div>
-        <v-spacer></v-spacer>
-        <div class="column">
-            <v-btn>
-                <v-icon>pause</v-icon>
-            </v-btn>
-        </div>
-    </div>
-    <div v-if="button_state" id="start_button" @click="start_game">
-        <v-btn>Start</v-btn>
-    </div>
-
-    <v-dialog :value="game_finished" width="500">
-        <v-card>
-            <v-card-text :style="{'text-align':'center', color: (game_status)?'#4BB543':'#ED5249'}">
-                {{(game_status)?"You won, but It's not over!": 'You Suck!!! Try Again!'}}
-            </v-card-text>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-                <v-btn color="primary" :to="{name: 'home'}" flat>
-                    back
-                </v-btn>
-                <v-spacer></v-spacer>
-                <v-btn color="primary" flat @click="again">
-                    try again
-                </v-btn>
-
-            </v-card-actions>
-        </v-card>
-    </v-dialog>
+    <start-button></start-button>
+    <try-again></try-again>
+    <bottom-buttons></bottom-buttons>
 </div>
 </template>
 
@@ -145,8 +104,6 @@ export default {
     layout: 'game',
     data() {
         return {
-            button_state: true,
-            selected: [],
         }
     },
     mounted() {
@@ -157,122 +114,65 @@ export default {
         ...mapGetters([
             'game_words',
             'game_ready_state',
-            'timeout',
-            'game_status',
-            'game_finished',
         ])
     },
-    methods: {
-        again() {
-            this.$store.dispatch('hacume')
-        },
-        start_game() {
-            this.button_state = false;
-            let vue = this
-            window.addEventListener('start', () => {
-                vue.$nextTick(() => {
-                    this.countdown()
-                })
-            });
-            this.$store.dispatch('hacume')
-            window.addEventListener('end', () => this.$store.dispatch('finish'));
-        },
-        countdown() {
-            let countDownTime = config.timeout;
-            let el = document.getElementById("countdown")
-            el.innerHTML = countDownTime;
-            x = setInterval(function () {
-                --countDownTime;
-                el.innerHTML = countDownTime
-                if (countDownTime == 0) {
-                    clearInterval(x)
-                    window.dispatchEvent(new Event('end'));
-                }
-            }, 1000);
-        },
-        async clickHandler(e) {
-            let cube = e.currentTarget //to delete elements
-            let data_id = cube.getAttribute('data-id') - 1 //index of word array
-            let pair_id = this.game_words[data_id].p_id //to check if word==definition
+    // methods: {
+    //     async clickHandler(e) {
+    //         let cube = e.currentTarget //to delete elements
+    //         let data_id = cube.getAttribute('data-id') - 1 //index of word array
+    //         let pair_id = this.game_words[data_id].p_id //to check if word==definition
 
-            let s = this.selected
-            if (s.length == 0) {
-                s.push({
-                    data_id,
-                    pair_id,
-                    cube
-                })
-                cube.classList.add('selected')
-            } else if (s.length == 1) {
-                if (s[0].data_id == data_id) {
-                    s[0].cube.classList.remove('selected')
-                    this.selected = []
-                    return
-                }
-                s.push({
-                    data_id,
-                    pair_id,
-                    cube
-                })
-                cube.classList.add('selected')
-            }
-            s = this.selected
-            if (s.length == 2) {
-                if (s[0].pair_id == s[1].pair_id) {
-                    s[0].cube.parentElement.style.visibility = 'hidden'
-                    s[1].cube.parentElement.style.visibility = 'hidden'
-                    let gamefinished = await this.$store.dispatch('add_found_pair', s[0].pair_id)
-                    if (gamefinished == true) {
-                        clearInterval(x)
-                    }
-                }
-                s[0].cube.classList.remove('selected')
-                s[1].cube.classList.remove('selected')
+    //         let s = this.selected
+    //         if (s.length == 0) {
+    //             s.push({
+    //                 data_id,
+    //                 pair_id,
+    //                 cube
+    //             })
+    //             cube.classList.add('selected')
+    //         } else if (s.length == 1) {
+    //             if (s[0].data_id == data_id) {
+    //                 s[0].cube.classList.remove('selected')
+    //                 this.selected = []
+    //                 return
+    //             }
+    //             s.push({
+    //                 data_id,
+    //                 pair_id,
+    //                 cube
+    //             })
+    //             cube.classList.add('selected')
+    //         }
+    //         s = this.selected
+    //         if (s.length == 2) {
+    //             if (s[0].pair_id == s[1].pair_id) {
+    //                 s[0].cube.parentElement.style.visibility = 'hidden'
+    //                 s[1].cube.parentElement.style.visibility = 'hidden'
+    //                 let gamefinished = await this.$store.dispatch('add_found_pair', s[0].pair_id)
+    //                 if (gamefinished == true) {
+    //                     clearInterval(x)
+    //                 }
+    //             }
+    //             s[0].cube.classList.remove('selected')
+    //             s[1].cube.classList.remove('selected')
 
-                this.selected = [];
-            }
+    //             this.selected = [];
+    //         }
 
-        },
-    },
-    watch: {
-        selected() {}
-    }
+    //     },
+    // },
 }
 </script>
 
 <style>
-#countdown{
-    align-self: flex-start;
-}
-.fixed {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-}
+
+
 
 #game {
     padding: 30px 0;
 }
 
-#start_button {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-}
 
-#timeout {
-    opacity: 0.3;
-    width: 100%;
-    height: 100%;
-    font-size: calc(50vh);
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .blur-svg {
     display: none;
