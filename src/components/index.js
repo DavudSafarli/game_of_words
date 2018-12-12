@@ -6,8 +6,10 @@ import ButtomButtons from './ButtomButtons'
 import TryAgain from './TryAgain'
 import Timeout from './Timeout'
 import WordCard from './WordCard'
+import PauseWindow from './PauseWindow'
 
 [
+  PauseWindow,
   WordCard,
   Timeout,
   TryAgain,
@@ -17,5 +19,4 @@ import WordCard from './WordCard'
   Navbar
 ].forEach(Component => {
   Vue.component(Component.name, Component)
-  console.log(Component.name)
 })

@@ -1,6 +1,8 @@
 <template>
 <div>
+  <transition name="page" mode="out-in">
     <component v-if="layout" :is="layout" />
+  </transition>
 </div>
 </template>
 
@@ -36,9 +38,21 @@ export default {
       }
       this.layout = layouts[layout]
     },
-  }
+  },
 }
 </script>
 
 <style>
+.home-link::before{
+  background-color: unset!important;
+}
+body{
+  background-color: #fafafa;
+}
+.preload, .preload * {
+    -webkit-transition: none !important;
+  -moz-transition: none !important;
+  -ms-transition: none !important;
+  -o-transition: none !important;
+}
 </style>

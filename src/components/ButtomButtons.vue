@@ -1,13 +1,13 @@
 <template>
 <div class="columns is-mobile fixed">
         <div class="column">
-            <v-btn :to="{name: 'home'}">
+            <v-btn  active-class="home-link v-btn--active" :to="{name: 'home'}">
                 <v-icon>arrow_back</v-icon>
             </v-btn>
         </div>
         <v-spacer></v-spacer>
         <div class="column">
-            <v-btn>
+            <v-btn color="grey lighten-4" @click="pause">
                 <v-icon>pause</v-icon>
             </v-btn>
         </div>
@@ -15,8 +15,26 @@
 </template>
 
 <script>
+import {mapGetters, mapMutations} from 'vuex'
 export default {
-    name: 'BottomButtons'
+    name: 'BottomButtons',
+    computed: {
+        ...mapGetters([
+            'game_state'
+        ]),
+    },
+    methods: {
+        ...mapMutations([
+            'set_game_state',
+            'set_offset',
+            'set_time'
+        ]),
+        pause() {
+            console.log('paused')
+            this.set_game_state('paused')
+            this.set_offset()
+        }
+    }
 }
 </script>
 
