@@ -1,16 +1,16 @@
 <template>
-<div class="columns is-mobile" id="game">
-    <div class="column is-one-third" v-for="(item, index) in game_words" :key="index">
+<div  v-if="game_state == true || game_state == 'paused'" class="columns is-mobile" id="game">
+    <div  class="column is-one-third" v-for="(item, index) in game_words" :key="index">
         <div class="rel">
-            <svg viewBox="0 0 308.4 308.4">
+            <!-- <svg viewBox="0 0 308.4 308.4">
                 <defs>
-                    <linearGradient id="linear-gradient" x1="10" y1="142.86" x2="-275.71" y2="142.86" gradientTransform="matrix(-1, 0, 0, 1, 10, 0)" gradientUnits="userSpaceOnUse">
+                    <linearGradient :id="'linear-gradient' + index" x1="10" y1="142.86" x2="-275.71" y2="142.86" gradientTransform="matrix(-1, 0, 0, 1, 10, 0)" gradientUnits="userSpaceOnUse">
                         <stop offset="0" stop-color="#fff" />
                         <stop offset="1" stop-color="#d1d3d4" />
                     </linearGradient>
-                    <linearGradient id="linear-gradient-2" x1="7.71" y1="142.86" x2="-273.43" y2="142.86" gradientTransform="matrix(-1, 0, 0, 1, 10, 0)" gradientUnits="userSpaceOnUse">
-                        <stop offset="0" stop-color="#d1d3d4" />
-                        <stop offset="1" stop-color="#fff" />
+                    <linearGradient :id="'linear-gradient-2' + index" x1="7.71" y1="142.86" x2="-273.43" y2="142.86" gradientTransform="matrix(-1, 0, 0, 1, 10, 0)" gradientUnits="userSpaceOnUse">
+                        <stop offset="0" :stop-color="item.arr[0]" />
+                        <stop offset="1" :stop-color="item.arr[1]" />
                     </linearGradient>
                 </defs>
                 <title>Asset 2</title>
@@ -71,15 +71,19 @@
                                 <rect style="fill: #828487;opacity: 0.98;"  x="0.62" y="0.63" width="285.37" height="285.4" rx="53.65" ry="53.65" />
                                 <rect style="fill: #808285;"  x="0.17" y="0.19" width="285.37" height="285.4" rx="53.65" ry="53.65" />
                             </g>
-                            <rect style="fill: url(#linear-gradient);"  width="285.71" height="285.71" rx="53.71" ry="53.71" />
-                            <rect style="fill: url(#linear-gradient-2);"  x="2.29" y="2.29" width="281.14" height="281.14" rx="51.43" ry="51.43" />
+                            <rect :style="'fill: url(#linear-gradient' + index +')'"  width="285.71" height="285.71" rx="53.71" ry="53.71" />
+                            <rect :style="'fill: url(#linear-gradient-2' + index + ')'"  x="2.29" y="2.29" width="281.14" height="281.14" rx="51.43" ry="51.43" />
                         </g>
                     </g>
                 </g>
                 </svg>
-            <div @click="clickHandler" :data-id="index + 1" class="abs">
-                <p v-html="item.key"></p>
+            -->
+            <div @click="clickHandler" :data-id="index + 1" v-html="item.key" class="pic" ref='pic'>
+                
             </div>
+            <!-- <div @click="clickHandler" :data-id="index + 1" class="abs">
+                <p v-html="item.key"></p>
+            </div> -->
         </div>
     </div>
 </div>
@@ -91,13 +95,14 @@ import {mapGetters} from 'vuex'
 export default {
     name: 'WordCard',
     data() {
-        return {    
+        return {
             selected: [],
         }
     },
      computed: {
         ...mapGetters([
             'game_words',
+            'game_state'
         ])
     },
     methods: {
@@ -129,22 +134,112 @@ export default {
             }
             s = this.selected
             if (s.length == 2) {
-                if (s[0].pair_id == s[1].pair_id) {
-                    s[0].cube.parentElement.style.visibility = 'hidden'
-                    s[1].cube.parentElement.style.visibility = 'hidden'
-                    let gamefinished = await this.$store.dispatch('add_found_pair', s[0].pair_id)
-                }
                 s[0].cube.classList.remove('selected')
                 s[1].cube.classList.remove('selected')
 
-                this.selected = [];
+                if (s[0].pair_id == s[1].pair_id) {
+                    s[0].cube.classList.add('found')
+                    s[1].cube.classList.add('found')
+
+                    setTimeout(async() => {
+                        s[0].cube.parentElement.style.visibility = 'hidden'
+                        s[1].cube.parentElement.style.visibility = 'hidden'
+                        let gamefinished = await this.$store.dispatch('add_found_pair', s[0].pair_id)
+                    }, 200);
+                }
+                    this.selected = [];
+
             }
 
         },
+        resizeHandler() {
+            let el = document.querySelector('.pic')
+            if(!el)
+                return
+            console.log('resized')
+            let root = document.querySelector('#game')
+            root.style.setProperty('--width', el.offsetWidth + 'px')
+        },
+        debounce(func, wait, immediate) {
+            // console.log('123')
+            var timeout;
+            return function() {
+                var context = this, args = arguments;
+                var later = function() {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                };
+                var callNow = immediate && !timeout;
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+                if (callNow) func.apply(context, args);
+            }
+        }
+    },
+    
+    mounted() {
+        console.log('mounted')
+        window.addEventListener('resize', this.debounce(this.resizeHandler, 50, false))
+        this.resizeHandler()
+    },
+    
+    updated() {
+        if(this.game_state == true)
+            this.resizeHandler()
     },
 }
 </script>
 
 <style>
 
+.selected {
+    background: linear-gradient( 37deg, rgba(6, 108, 143, 0.5) -20%, rgba(6, 143, 17, 0.473) 60%)!important;
+}
+.found{
+    transform: scale(1.2);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0,35% 41%, 0 40%,  40% 51%, 0 64%, 39% 57%, 0 100%, 2% 100%, 43% 63%, 50% 100%, 51% 61%, 85% 99%, 58% 58%, 100% 57%, 61% 52%, 100% 21%, 61% 41%, 76% -8%, 49% 43%, 41% 0%, 41% 42%);
+}
+#game{
+    --width: 120px;
+}
+.pic{
+    cursor: pointer;
+    border-radius: 10px;
+    background: linear-gradient( 37deg, rgba(6, 108, 143, 0.5) -20%, rgba(6, 108, 143,1) 60%);
+    width: 100%;
+    height: var(--width);
+    font-size: calc(0.7rem + 0.6vw);
+    padding: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    word-break: break-word;
+    white-space: pre-line;
+}
+
+.abs {
+    top: 0;
+    bottom: 0%;
+    display: flex;
+    align-items: center;
+    left: 0;
+    right: 0;
+    position: absolute;
+    font-size: calc(0.7rem + 0.6vw);
+    border-radius: 10px;
+    cursor: pointer;
+    margin: 1%;
+    padding: 0 1px;
+}
+
+
+.rel {
+    position: relative;
+}
+
+.rel div {
+}
+
 </style>
+
+

@@ -2,9 +2,6 @@ import axios from "axios";
 import Vuex from 'vuex';
 import Vue from 'vue';
 import config from '../config/game.config.js'
-import {
-    templateElement
-} from "babel-types";
 Vue.use(Vuex);
 var x;
 
@@ -12,21 +9,22 @@ export const store = new Vuex.Store({
     /*
     states:
     1)before game, you can start the game or go back
-    2)you pressed start, but it's loading
-    3)game started, you can pause, go back, 
-    4)game paused, you can continue, play again, go back
-    5)game finished, you can try again or go back
-    game_state: false|'loading'|true|'paused'|'finished'
+    2)you are on the preview page
+    3)you pressed start, but it's loading
+    4)game started, you can pause, go back, 
+    5)game paused, you can continue, play again, go back
+    6)game finished, you can try again or go back
+    game_state: false|'pewview'|'loading'|true|'paused'|'finished'
     */
     state: {
         offset: 0,
         time: null,
-        game_state: 'loading',
+        game_state: false,
         button_state: true,
         game_finished: null,
         game_status: null, // won or lost
         found_pairs: [],
-        game_words: '0',
+        game_words: [],
         game_ready_state: false,
         words_hard: ['consider',
             'minute',
@@ -1087,20 +1085,23 @@ export const store = new Vuex.Store({
 
         countdown({ state }) {
             let timeout = config.default.timeout;
+            state.offset = 0;
             state.time = new Date().getTime()/1000
             let remain = timeout
             let el = document.getElementById("countdown")
             el.innerHTML = remain
             x = setInterval(function () {
                 console.log(1)
-                if (state.game_state != 'paused') {
+                if (state.game_state == true) {
                     remain = timeout - (state.offset + (new Date()).getTime()/1000 - state.time)
                     el.innerHTML = Math.ceil(remain)
-
+                    
                     if (remain <= 0) {
                         clearInterval(x)
                         window.dispatchEvent(new Event('end'));
                     }
+                }else if(state.game_state == false){
+                    clearInterval(x)
                 }
             }, 50);
         },
@@ -1112,7 +1113,7 @@ export const store = new Vuex.Store({
             //         state.game_words += '0';
             //     }
             // }, 50);
-
+            commit('set_game_state', 'loading')
             state.game_ready_state = true;
             state.game_finished = null;
             state.game_status = null;
@@ -1128,7 +1129,7 @@ export const store = new Vuex.Store({
                 response.push({
                     id: c,
                     p_id: i + 1,
-                    key
+                    key: '<p>' + key + '</p>'
                 })
                 c++;
                 promises.push(hit_api(key, i))
@@ -1159,7 +1160,10 @@ export const store = new Vuex.Store({
                     for (let i = 1; i < l; i++) {
                         index = (res[i].text && res[i].text.length < res[0].text.length) ? i : index
                     }
-                    let def = res[index].text.replace('.', '').replace(/\s*\(.*?\)\s*/g, '')
+                    let def = 'ERROR'
+                    if(res[index].text)
+                        def = res[index].text.replace('.', '').replace(/\s*\(.*?\)\s*/g, '')
+
                     if (def.length > 10)
                         def = def.split(';')[0]
                     let $l = def.length

@@ -1,5 +1,5 @@
 <template>
-<div class="columns is-mobile fixed">
+<div v-if="game_state == true || game_state == 'paused'" class="columns is-mobile fixed">
         <div class="column">
             <v-btn  active-class="home-link v-btn--active" :to="{name: 'home'}">
                 <v-icon>arrow_back</v-icon>

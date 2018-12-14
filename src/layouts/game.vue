@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app class="game-color">
     <!-- <div class="container mt-4"> -->
     <v-container class="game-container">
       <child/>
@@ -26,9 +26,15 @@ export default {
   padding-top: 0px!important;
   font-family: 'Hurme Light'!important;
 }
+.game-container p{
+  font-weight: 600!important;
+  color: white;
+}
 p{
   font-weight: normal!important;
 }
-
+.game-color .application--wrap{
+  background: radial-gradient(circle at 50% 50% , #fff 0%, rgb(99, 172, 192) 80%);
+}
 </style>
 

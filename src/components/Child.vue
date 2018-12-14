@@ -21,6 +21,7 @@ export default {
 </script>
 
 <style>
+
 .page-enter-active{
   transition: all 0.5s;
 }
