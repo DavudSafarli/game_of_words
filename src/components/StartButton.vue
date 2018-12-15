@@ -77,8 +77,8 @@ export default {
         function show() {
             return new Promise(res => {
                 setTimeout(() => {
-                        arr[0].classList.remove('none', 'found')
-                        arr[1].classList.remove('none', 'found')
+                        arr[0].classList.remove('none', 'found', 'selected')
+                        arr[1].classList.remove('none', 'found', 'selected')
                     
                     return res()
                 }, 300);
@@ -98,9 +98,9 @@ export default {
         function found() {
             return new Promise(res => {
                 setTimeout(() => {
-                    arr[0].classList.remove('selected')
+                    // arr[0].classList.remove('selected')
+                    // arr[1].classList.remove('selected')
                     arr[0].classList.add('found')
-                    arr[1].classList.remove('selected')
                     arr[1].classList.add('found')
                     return res()
                 }, 300);
@@ -138,7 +138,7 @@ export default {
     word-break: break-word;
     white-space: pre-line;
     justify-content: center;
-    background: linear-gradient(37deg, rgba(6, 108, 143, 0.5) -20%, rgba(6, 108, 143, 1) 60%);
+    background: #747d8c;
     width: 120px;
     height: 120px;
 }

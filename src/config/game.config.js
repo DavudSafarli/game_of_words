@@ -1,9 +1,9 @@
 
 export default {
     default: {
-        numberOfCards: "12",
-        numberOfPairs: "6",
-        timeout: "600"
+        numberOfCards: "4",
+        numberOfPairs: "2",
+        timeout: "30"
     },
     
 

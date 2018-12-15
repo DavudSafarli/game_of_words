@@ -4,7 +4,7 @@ import Vue from 'vue';
 import config from '../config/game.config.js'
 Vue.use(Vuex);
 var x;
-
+var t;
 export const store = new Vuex.Store({
     /*
     states:
@@ -1068,6 +1068,7 @@ export const store = new Vuex.Store({
                 state.game_finished = true
                 state.game_status = true // won
                 clearInterval(x);
+                clearInterval(t);
             }
         },
         add_found_pair({ commit, dispatch }, pair_id) {
@@ -1084,35 +1085,39 @@ export const store = new Vuex.Store({
         },
 
         countdown({ state }) {
-            let timeout = config.default.timeout;
-            state.offset = 0;
+            let flag = 1
+            let timeout = config.default.timeout
+            state.offset = 0
             state.time = new Date().getTime()/1000
             let remain = timeout
             let el = document.getElementById("countdown")
             el.innerHTML = remain
             x = setInterval(function () {
-                console.log(1)
                 if (state.game_state == true) {
                     remain = timeout - (state.offset + (new Date()).getTime()/1000 - state.time)
                     el.innerHTML = Math.ceil(remain)
                     
                     if (remain <= 0) {
                         clearInterval(x)
+                        clearInterval(t)
                         window.dispatchEvent(new Event('end'));
+                    }else if(remain <= 10 && flag == true){
+                        flag = 0;
+                        t = setInterval(() => {
+                            if (state.game_state == true) {
+                                el.classList.add('danger')
+                                setTimeout(() => {
+                                    el.classList.remove('danger')
+                                }, 500);
+                            }
+                        }, 1000);
                     }
                 }else if(state.game_state == false){
                     clearInterval(x)
                 }
             }, 50);
         },
-
-        
         hacume({commit, state, dispatch }, data) { 
-            // let x = setInterval(() => {
-            //     if(state.game_words.length != config.default.numberOfCards){
-            //         state.game_words += '0';
-            //     }
-            // }, 50);
             commit('set_game_state', 'loading')
             state.game_ready_state = true;
             state.game_finished = null;
@@ -1142,11 +1147,9 @@ export const store = new Vuex.Store({
                 }
                 commit('save_game_words', shuffle(response))
                 commit('set_game_state', true)
-                clearInterval(x);
                 window.dispatchEvent(new Event('start'));
                 dispatch('countdown')
             })
-
 
             function url(key) {
                 return `https://api.wordnik.com/v4/word.json/${key}/definitions?limit=200&includeRelated=false&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=bdc7a844dda214d7b942a0622ef0d47ee6c4a6acb836dc532`
@@ -1170,17 +1173,17 @@ export const store = new Vuex.Store({
                     let arr = def.split(" ")
                     let style = '';
                     if ($l < arr.length * 6 && arr.length < 3) {
-                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 6;
+                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 5;
                         if (perc < 65)
                             perc = 65;
                         style = 'style="font-size:' + perc + '%;"'
                     } else if (arr.length > 10) {
-                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 7;
+                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 6;
                         if (perc < 65)
                             perc = 65;
                         style = 'style="font-size:' + perc + '%;padding:0 8px;"'
                     } else if (arr.length > 2) {
-                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 6;
+                        let perc = 100 - Math.ceil((arr.length / 2) - 1) * 7;
                         if (perc < 65)
                             perc = 65;
                         style = 'style="font-size:' + perc + '%;"'
@@ -1202,9 +1205,6 @@ export const store = new Vuex.Store({
                 }
                 return a;
             }
-
         }
-
-
     },
 })

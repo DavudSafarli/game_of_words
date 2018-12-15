@@ -65,7 +65,6 @@ export default {
 
 <style>
 #timeout {
-    opacity: 0.3;
     width: 100%;
     height: 100%;
     font-size: calc(50vh);
@@ -76,8 +75,13 @@ export default {
     justify-content: center;
     align-items: center;
 }
-
+.danger{
+    color: #EA2027;
+    opacity: 0.7!important;
+}
 #countdown {
+    transition: 0.3s;
+    opacity: 0.3;
     align-self: flex-start;
 }
 </style>

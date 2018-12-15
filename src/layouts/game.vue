@@ -34,7 +34,12 @@ p{
   font-weight: normal!important;
 }
 .game-color .application--wrap{
-  background: radial-gradient(circle at 50% 50% , #fff 0%, rgb(99, 172, 192) 80%);
+  /* background: radial-gradient(circle at 50% 50% , #fff 0%, rgb(99, 172, 192) 80%); */
+  background: #303952;
+  /*
+  #596275;
+  #576574
+  */
 }
 </style>
 

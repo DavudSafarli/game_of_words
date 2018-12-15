@@ -134,9 +134,7 @@ export default {
             }
             s = this.selected
             if (s.length == 2) {
-                s[0].cube.classList.remove('selected')
-                s[1].cube.classList.remove('selected')
-
+                
                 if (s[0].pair_id == s[1].pair_id) {
                     s[0].cube.classList.add('found')
                     s[1].cube.classList.add('found')
@@ -146,6 +144,17 @@ export default {
                         s[1].cube.parentElement.style.visibility = 'hidden'
                         let gamefinished = await this.$store.dispatch('add_found_pair', s[0].pair_id)
                     }, 200);
+                }else{
+                    setTimeout(() => {
+                        s[0].cube.classList.remove('selected')
+                        s[1].cube.classList.remove('selected')
+                        s[0].cube.classList.add('wrong')
+                        s[1].cube.classList.add('wrong')
+                        setTimeout(() => {
+                            s[0].cube.classList.remove('wrong')
+                            s[1].cube.classList.remove('wrong')
+                        }, 300);
+                    }, 100);
                 }
                     this.selected = [];
 
@@ -176,36 +185,59 @@ export default {
             }
         }
     },
-    
     mounted() {
         console.log('mounted')
         window.addEventListener('resize', this.debounce(this.resizeHandler, 50, false))
         this.resizeHandler()
     },
-    
     updated() {
         if(this.game_state == true)
             this.resizeHandler()
     },
 }
 </script>
-
 <style>
-
-.selected {
-    background: linear-gradient( 37deg, rgba(6, 108, 143, 0.5) -20%, rgba(6, 143, 17, 0.473) 60%)!important;
+.wrong{
+    background: red!important;
 }
+.selected {
+    /* background: linear-gradient( 37deg, rgba(6, 108, 143, 0.5) -20%, rgba(6, 143, 17, 0.473) 60%)!important; */
+    background: #45aaf2!important;
+    position: relative;
+}
+/* 
+.selected::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-radius: 10px;
+    border: 2px solid red;
+}
+.selected::after {
+    content: '';
+    display: block;
+    position: absolute;
+    height: 2px;
+    width: 15px;
+    top: 0px;
+    left: 15px;
+} */
+
 .found{
     transform: scale(1.2);
-    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0,35% 41%, 0 40%,  40% 51%, 0 64%, 39% 57%, 0 100%, 2% 100%, 43% 63%, 50% 100%, 51% 61%, 85% 99%, 58% 58%, 100% 57%, 61% 52%, 100% 21%, 61% 41%, 76% -8%, 49% 43%, 41% 0%, 41% 42%);
+    /* clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 0,35% 41%, 0 40%,  40% 51%, 0 64%, 39% 57%, 0 100%, 2% 100%, 43% 63%, 50% 100%, 51% 61%, 85% 99%, 58% 58%, 100% 57%, 61% 52%, 100% 21%, 61% 41%, 76% -8%, 49% 43%, 41% 0%, 41% 42%); */
+    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%, 0% 0%, 49% 0%, 49% 49%, 0% 49%,0% 51%, 49% 51%, 49% 100%, 51% 100%, 51% 51%, 100% 51%, 100% 49%, 51% 49%, 51% 0%);
 }
-#game{
-    --width: 120px;
-}
+
 .pic{
     cursor: pointer;
-    border-radius: 10px;
-    background: linear-gradient( 37deg, rgba(6, 108, 143, 0.5) -20%, rgba(6, 108, 143,1) 60%);
+    border-radius: 8%;
+    /* background: linear-gradient( 37deg, rgba(6, 108, 143, 0.5) -20%, rgba(6, 108, 143,1) 60%); */
+    background: #747d8c;
     width: 100%;
     height: var(--width);
     font-size: calc(0.7rem + 0.6vw);
@@ -217,6 +249,9 @@ export default {
     white-space: pre-line;
 }
 
+#game{
+    --width: 120px;
+}
 .abs {
     top: 0;
     bottom: 0%;
