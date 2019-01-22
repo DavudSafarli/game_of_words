@@ -1,5 +1,5 @@
 <template>
-<div id="timeout" v-if="game_ready_state">
+<div id="timeout" v-if="['paused', 'loading', true, 'finished'].indexOf(game_state) != -1">
     <span id="countdown"></span>
 </div>
 </template>
@@ -13,7 +13,7 @@ export default {
     name: 'Timeout',
     computed: {
         ...mapGetters([
-            'game_ready_state',
+            'game_state'
         ])
     },
     methods: {
@@ -44,9 +44,11 @@ export default {
         // if the page is shown, play the video
         function handleVisibilityChange() {
             if (document[hidden]) {
-                vue.set_game_state('paused')
-                vue.set_offset()
-                document.title = 'Paused';
+                if(vue.game_state == true){
+                    vue.set_game_state('paused')
+                    vue.set_offset()
+                    document.title = 'Paused';
+                }
             } else {
                 document.title = title;
             }
@@ -65,6 +67,8 @@ export default {
 
 <style>
 #timeout {
+    user-select: none;
+    cursor: default;
     width: 100%;
     height: 100%;
     font-size: calc(50vh);

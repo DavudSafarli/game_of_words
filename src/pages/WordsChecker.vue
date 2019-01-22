@@ -12,7 +12,7 @@ div
     
     .columns
       .column.is-full
-        v-btn(:to="{name:'playgame1'}") Play
+        v-btn(:to="{name:'home'}") Play
 
     v-btn(:to="{name:'home'}") Back
 </template>

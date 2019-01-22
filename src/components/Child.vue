@@ -1,6 +1,7 @@
 <template >
 <div>
-  <transition name="page" mode="out-in">
+  <!-- <transition name="page" mode="out-in"> -->
+  <transition>
     <slot>
       <router-view/>
     </slot>
@@ -13,7 +14,6 @@ export default {
   name: 'Child',
   mounted() {
     window.onload = function(){
-      console.log('loaded')
       document.body.classList.remove('preload')
     }
   }

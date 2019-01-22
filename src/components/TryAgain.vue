@@ -1,15 +1,15 @@
 <template>
-<v-dialog :value="game_finished" width="500">
+<v-dialog persistent :value="game_state == 'finished'" width="500">
     <v-card>
-        <v-card-text :style="{'text-align':'center', color: (game_status)?'#4BB543':'#ED5249'}">
-            {{(game_status)?"You won, but It's not over!": 'You Suck!!! Try Again!'}}
+        <v-card-text :style="{'text-align':'center', color: (user_state == true)?'#4BB543': (user_state == false)?'#ED5249':''}">
+            {{(user_state)?"You won, but It's not over!": 'You Suck!!! Try Again!'}}
         </v-card-text>
 
         <v-divider></v-divider>
 
         <v-card-actions>
-            <v-btn color="primary" :to="{name: 'home'}" flat>
-                back
+            <v-btn color="primary" flat @click="$store.dispatch('chooseLevel')">
+                Change Level
             </v-btn>
             <v-spacer></v-spacer>
             <v-btn color="primary" flat @click="$store.dispatch('hacume')">
@@ -30,8 +30,8 @@ export default {
     name: 'TryAgain',
     computed: {
         ...mapGetters([
-            'game_finished',
-            'game_status',
+            'user_state',
+            'game_state'
         ])
     }
 }

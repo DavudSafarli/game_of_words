@@ -1,11 +1,11 @@
 <template>
   <v-app>
     <navbar/>
-    <!-- <div class="container mt-4"> -->
-    <v-container>
+    <div class="mt-5">
+    <v-container class="default-container">
       <child/>
     </v-container>
-    <!-- </div> -->
+    </div>
   </v-app>
 </template>
 
@@ -17,5 +17,14 @@ export default {
 }
 </script>
 <style>
+.default-container{
+  position: unset!important;
+}
+@media screen and (min-width: 1600px){
+  .default-container {
+      max-width: 1600px!important;
+      width: 1600px!important;
+  }
+}
 </style>
 

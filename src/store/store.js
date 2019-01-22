@@ -10,22 +10,171 @@ export const store = new Vuex.Store({
     states:
     1)before game, you can start the game or go back
     2)you are on the preview page
-    3)you pressed start, but it's loading
+  2.5)you can select level
+    3)you selected, game is loading
     4)game started, you can pause, go back, 
     5)game paused, you can continue, play again, go back
     6)game finished, you can try again or go back
-    game_state: false|'pewview'|'loading'|true|'paused'|'finished'
+    game_state: false|'preview'|'level'|'loading'|true|'paused'|'finished'
     */
     state: {
-        offset: 0,
-        time: null,
-        game_state: false,
-        button_state: true,
-        game_finished: null,
-        game_status: null, // won or lost
-        found_pairs: [],
-        game_words: [],
-        game_ready_state: false,
+        game_state: false,//
+        user_state: null,
+        difficulty: null,
+        time: null,//
+        offset: 0,//
+        game_words: [],//
+        found_pairs: [],//
+        words_easy: ['able',
+        'acid',
+        'angry',
+        'automatic',
+        'awake',
+        'bad',
+        'beautiful',
+        'bent',
+        'bitter',
+        'blue',
+        'boiling',
+        'bright',
+        'broken',
+        'brown',
+        'certain',
+        'cheap',
+        'chemical',
+        'chief',
+        'clean',
+        'clear',
+        'cold',
+        'common',
+        'complete',
+        'complex',
+        'conscious',
+        'cruel',
+        'cut',
+        'dark',
+        'dead',
+        'dear',
+        'deep',
+        'delicate',
+        'dependent',
+        'different',
+        'dirty',
+        'dry',
+        'early',
+        'elastic',
+        'electric',
+        'equal',
+        'false',
+        'fat',
+        'feeble',
+        'female',
+        'fertile',
+        'first',
+        'fixed',
+        'flat',
+        'foolish',
+        'free',
+        'frequent',
+        'full',
+        'future',
+        'general',
+        'good',
+        'gray',
+        'great',
+        'green',
+        'hanging',
+        'happy',
+        'hard',
+        'healthy',
+        'high',
+        'hollow',
+        'ill',
+        'important',
+        'kind',
+        'last',
+        'late',
+        'left',
+        'like',
+        'living',
+        'long',
+        'loose',
+        'loud',
+        'low',
+        'male',
+        'married',
+        'material',
+        'medical',
+        'military',
+        'mixed',
+        'narrow',
+        'natural',
+        'necessary',
+        'new',
+        'normal',
+        'old',
+        'open',
+        'opposite',
+        'parallel',
+        'past',
+        'physical',
+        'political',
+        'poor',
+        'possible',
+        'present',
+        'private',
+        'probable',
+        'public',
+        'quick',
+        'quiet',
+        'ready',
+        'red',
+        'regular',
+        'responsible',
+        'right',
+        'rough',
+        'round',
+        'sad',
+        'safe',
+        'same',
+        'second',
+        'secret',
+        'separate',
+        'serious',
+        'sharp',
+        'short',
+        'shut',
+        'simple',
+        'slow',
+        'small',
+        'smooth',
+        'soft',
+        'solid',
+        'special',
+        'sticky',
+        'stiff',
+        'straight',
+        'strange',
+        'strong',
+        'sudden',
+        'sweet',
+        'tall',
+        'thick',
+        'thin',
+        'tight',
+        'tired',
+        'true',
+        'violent',
+        'waiting',
+        'warm',
+        'wet',
+        'white',
+        'wide',
+        'wise',
+        'wrong',
+        'yellow',
+        'young',
+        ],
         words_hard: ['consider',
             'minute',
             'accord',
@@ -1026,21 +1175,25 @@ export const store = new Vuex.Store({
             'bemused',
         ],
     },
-
-    // getters
     getters: {
+        user_state: state => state.user_state,
         game_state: state => state.game_state,
         timeout: state => state.timeout,
         game_words: state => state.game_words,
-        get_button_state: state => state.game_words,
-        game_status: state => state.game_status,
-        button_state: state => state.button_state,
-        game_finished: state => state.game_finished,
-        game_ready_state: state => state.game_ready_state,
     },
-
-    // mutations
     mutations: {
+        reset_game(state) {
+            state.game_words = [];
+            state.found_pairs = [];
+            clearInterval(x);
+            clearInterval(t);
+        },
+        set_difficulty(state, st){
+            state.difficulty = st
+        },
+        set_user_state(state, st){
+            state.user_state = st
+        },
         set_time(state, time) {
             state.time = new Date().getTime()/1000
         },
@@ -1050,9 +1203,6 @@ export const store = new Vuex.Store({
         set_game_state(state, st) {
             state.game_state = st
         },
-        buttonState(state, bool) {
-            state.button_state = bool
-        },
         add_found_pair(state, pair_id) {
             state.found_pairs.push(pair_id)
         },
@@ -1060,15 +1210,10 @@ export const store = new Vuex.Store({
             state.game_words = res
         },
     },
-
-    // actions
     actions: {
-        check_finish({ commit ,state }) {
+        check_finish({ dispatch ,state }) {
             if (state.found_pairs.length == config.default.numberOfPairs) {
-                state.game_finished = true
-                state.game_status = true // won
-                clearInterval(x);
-                clearInterval(t);
+                dispatch('finish')
             }
         },
         add_found_pair({ commit, dispatch }, pair_id) {
@@ -1076,15 +1221,17 @@ export const store = new Vuex.Store({
             dispatch('check_finish')
         },
         finish({ commit, state, dispatch }, data) {
-            state.game_finished = true
-            if (state.found_pairs.length == 6) {
-                state.game_status = true // won
+            commit('set_game_state', 'finished')
+            clearInterval(x);
+            clearInterval(t);
+            window.dispatchEvent(new Event('end'));
+            if (state.found_pairs.length == config.default.numberOfPairs) {
+                commit('set_user_state', true)
             } else {
-                state.game_status = false; //lost
+                commit('set_user_state', false)
             }
         },
-
-        countdown({ state }) {
+        countdown({ state, dispatch }) {
             let flag = 1
             let timeout = config.default.timeout
             state.offset = 0
@@ -1096,11 +1243,8 @@ export const store = new Vuex.Store({
                 if (state.game_state == true) {
                     remain = timeout - (state.offset + (new Date()).getTime()/1000 - state.time)
                     el.innerHTML = Math.ceil(remain)
-                    
                     if (remain <= 0) {
-                        clearInterval(x)
-                        clearInterval(t)
-                        window.dispatchEvent(new Event('end'));
+                        dispatch('finish')
                     }else if(remain <= 10 && flag == true){
                         flag = 0;
                         t = setInterval(() => {
@@ -1117,19 +1261,18 @@ export const store = new Vuex.Store({
                 }
             }, 50);
         },
-        hacume({commit, state, dispatch }, data) { 
+        hacume({commit, state, dispatch }) { 
             commit('set_game_state', 'loading')
-            state.game_ready_state = true;
-            state.game_finished = null;
-            state.game_status = null;
             state.game_words = '';
             state.found_pairs = [];
             let promises = [];
             let response = [];
+            let select = 'words_' + state.difficulty;
             let c = 1;
+            let l = state[select].length
             for (let i = 0; i < config.default.numberOfPairs; i++) {
-                const rd = Math.floor(Math.random() * 1000);
-                let key = state.words_hard[rd]
+                const rd = Math.floor(Math.random() * l);
+                let key = state[select][rd]
                 // let key = 'justify'
                 response.push({
                     id: c,
@@ -1147,7 +1290,7 @@ export const store = new Vuex.Store({
                 }
                 commit('save_game_words', shuffle(response))
                 commit('set_game_state', true)
-                window.dispatchEvent(new Event('start'));
+                window.dispatchEvent(new Event('gamestart'));
                 dispatch('countdown')
             })
 
@@ -1160,14 +1303,23 @@ export const store = new Vuex.Store({
                     res = res.data;
                     let l = res.length
                     let index = 0;
-                    for (let i = 1; i < l; i++) {
+                    for (let i = 0  ; i < l; i++) {
+                        if(i < 5){
+                            if(res[i].text.split(';')[0].length < 45 || res[i].text.split(';')[0].split(' ').length < 7){
+                                index = i;
+                                console.log(`index: ${i}, word: ${key}, def: ${res[i].text}`)
+                                break;
+                            }
+                        }
+                        if(res[i].text)
                         index = (res[i].text && res[i].text.length < res[0].text.length) ? i : index
                     }
+                    console.log(`index: ${index}, word: ${key}, def: ${res[index].text}`)
                     let def = 'ERROR'
                     if(res[index].text)
                         def = res[index].text.replace('.', '').replace(/\s*\(.*?\)\s*/g, '')
 
-                    if (def.length > 10)
+                    if (def.length > 30)
                         def = def.split(';')[0]
                     let $l = def.length
                     let arr = def.split(" ")
@@ -1205,6 +1357,14 @@ export const store = new Vuex.Store({
                 }
                 return a;
             }
+        },
+        chooseLevel({commit, state, dispatch}) {
+            commit('reset_game');
+            commit('set_game_state', 'level')
+        },
+        goHome({commit, state, dispatch}) {
+            commit('reset_game');
+            commit('set_game_state', 'preview')
         }
     },
 })

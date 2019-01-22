@@ -29,6 +29,7 @@ export default {
 .game-container p{
   font-weight: 600!important;
   color: white;
+  text-align: center;
 }
 p{
   font-weight: normal!important;

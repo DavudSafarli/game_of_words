@@ -1,12 +1,12 @@
 <template>
-<div :class="{'columns is-mobile w100':true,  'overlay': (game_state == 'paused' || game_state == 'loading')}">
+<div :class="{'columns is-mobile justify-center align-center w100':true,  'overlay': (game_state == 'paused' || game_state == 'loading')}">
     <div :class="{'column is-two-fifths-fullhd is-two-fifths-widescreen is-three-fifths-desktop is-three-fifths-tablet is-four-fifths-mobile wrapper':true}">
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="blur-svg"><defs><filter id="blur-filter"><feGaussianBlur stdDeviation="3"></feGaussianBlur></filter></defs></svg>
         <timeout></timeout>
         <word-card></word-card>
         <start-button></start-button>
+        <level></level>
     </div>
-    <!-- <div id="gameP"></div> -->
     <pause-window></pause-window>
     
     <try-again></try-again>
@@ -32,7 +32,6 @@ export default {
     computed: {
         ...mapGetters([
             'game_words',
-            'game_ready_state',
             'game_state',
         ])
     },

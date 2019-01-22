@@ -7,8 +7,10 @@ import TryAgain from './TryAgain'
 import Timeout from './Timeout'
 import WordCard from './WordCard'
 import PauseWindow from './PauseWindow'
+import Level from './Level'
 
 [
+  Level,
   PauseWindow,
   WordCard,
   Timeout,

@@ -1,7 +1,10 @@
 <template>
-    <v-toolbar height="50" max-width="1200">
+<div>
+    <v-navigation-drawer hide-overlay disable-resize-watcher clipped right v-model="drawer" app>
+    </v-navigation-drawer>
+    <v-toolbar fixed color="#ecf0f1" max-width="1200" dense clipped-left>
         <v-toolbar-items>
-            <v-btn flat active-class="false height" :to="{name:'home'}">
+            <v-btn flat active-class="false height" :to="{name: 'home'}">
                 <v-toolbar-title class="headline text-uppercase">
                     <span>English</span>
                     <span class="font-weight-light">Game</span>
@@ -12,57 +15,91 @@
         <v-spacer></v-spacer>
 
         <v-toolbar-items class="hidden-sm-and-down">
-            <v-btn class="new_button" flat :to="{name:'game1'}">
-                <v-chip class="new_chip" small color="red" text-color="white">new</v-chip>
-                <span>Words Checker</span>
+            <v-btn active-class="" flat class="new_button" color="#74b9ff" :to="{name:'games'}">
+                <span>Sign up</span>
             </v-btn>
-            <!-- <v-btn flat to="/game2"><span>Game 2</span></v-btn> -->
+            <v-btn active-class="" class="new_button" color="#74b9ff" :to="{name:'games'}">
+                <span>Login</span>
+            </v-btn>
+            <!-- <v-btn small flat to="/game2"><span>Game 2</span></v-btn> -->
+        </v-toolbar-items>
+        <v-toolbar-items class="hidden-md-and-up">
+            <v-toolbar-side-icon class="" @click.stop="drawer = !drawer"></v-toolbar-side-icon>
         </v-toolbar-items>
 
-        <v-toolbar-items>
-            <v-menu offset-y left>
-                <v-btn flat slot="activator" color="secondary" class="white--text">
-                    Games <v-icon>arrow_drop_down</v-icon>
-                </v-btn>
-
-                <v-list>
-                    <v-list-tile active-class="false" :to="{name:'game1'}">
-                        <v-list-tile-content>
-                            Words Checker
-                        </v-list-tile-content>
-                    </v-list-tile>
-
-                    <v-list-tile active-class="false" to="/asdas">
-                        <v-list-tile-content>
-                            Game 2
-                        </v-list-tile-content>
-                    </v-list-tile>
-                </v-list>
-
-            </v-menu>
-        </v-toolbar-items>
     </v-toolbar>
+</div>
 </template>
 
 <script>
 export default {
-    name: 'Navbar'
+    name: 'Navbar',
+    data: () => ({
+        drawer: false,
+        items: [{
+                icon: 'trending_up',
+                text: 'Most Popular'
+            },
+            {
+                icon: 'subscriptions',
+                text: 'Subscriptions'
+            },
+            {
+                icon: 'history',
+                text: 'History'
+            },
+            {
+                icon: 'featured_play_list',
+                text: 'Playlists'
+            },
+            {
+                icon: 'watch_later',
+                text: 'Watch Later'
+            }
+        ],
+        items2: [{
+                picture: 28,
+                text: 'Joseph'
+            },
+            {
+                picture: 38,
+                text: 'Apple'
+            },
+            {
+                picture: 48,
+                text: 'Xbox Ahoy'
+            },
+            {
+                picture: 58,
+                text: 'Nokia'
+            },
+            {
+                picture: 78,
+                text: 'MKBHD'
+            }
+        ]
+    }),
+    props: {
+        source: String
+    }
 }
 </script>
 
 <style>
-.new_button{
+.new_button {
     position: relative;
+    border-radius: 0!important;
 }
-.new_button .v-chip{
+
+.new_button .v-chip {
     top: -20px;
     left: 90px;
     position: absolute;
     font-size: 10px;
     height: 20px;
 }
-.new_button .v-chip span{
+
+.new_button .v-chip span {
     padding: 0 5px;
 }
-
 </style>

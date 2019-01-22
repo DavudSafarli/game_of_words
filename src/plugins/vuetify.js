@@ -19,7 +19,13 @@ import Vuetify, {
     VCardText,
     VDivider,
     VCardActions,
-    VChip   
+    VChip,
+    VLayout,
+    VFlex,
+    VForm,
+    VTextField,
+    VNavigationDrawer,
+    VToolbarSideIcon
 
 } from 'vuetify/lib'
 
@@ -48,6 +54,12 @@ Vue.use(Vuetify, {
         VCardText,
         VDivider,
         VCardActions,
-        VChip   
+        VChip,
+        VLayout,
+        VFlex,
+        VForm,
+        VTextField,
+        VNavigationDrawer,
+        VToolbarSideIcon
     }
 })

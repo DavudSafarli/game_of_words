@@ -5,10 +5,12 @@ import './plugins'
 import router from './router/'
 import store from './store'
 import 'bulma/css/bulma.min.css'
+import './firebase'
 Vue.config.productionTip = false
-
 new Vue({
   store,
   router,
   ...App
 })
+
+
